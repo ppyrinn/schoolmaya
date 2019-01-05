@@ -37,7 +37,7 @@
     </style>
 
  	<!-- Navbar -->	
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <nav class="navbar navbar-light navbar-expand-md fixed-top bg-white">
 		<div class="container">
 			<a class="navbar-brand" href="<?php echo (base_url('index.php/home/')) ?>"><img src="http://i66.tinypic.com/33dz3tk.png" style="width:120px"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,48 +72,44 @@
     <title>SekolahQu | Profile</title>
 </head>
 <body>
-    <br><br><center><h1><b>Your Profile</b></h1></center><br><br>
-    <div class="container" style="width:300px">
-        <form>
-            <div class="form-group">
-                <label>New Password</label>
-                <input type="password" name="NPassword" placeholder="New Password" id="txtNewPassword" class="form-control" style="font-size:14px">
-            </div>
-            <div id="divCheckPassword" role="alert"></div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" name="RNPassword" placeholder="Retype New Password" id="txtConfirmPassword" onChange="isPasswordMatch();" class="form-control" style="font-size:14px">
-            </div>
-            <center><button type="submit" class="btn btn-primary" style="font-size:14px">Submit</button></center>
-        </form>
-    </div>
-
     
-<script>
 
-function isPasswordMatch() {
-    var password = $("#txtNewPassword").val();
-    var confirmPassword = $("#txtConfirmPassword").val();
+    <div class="container pt-5 mt-5">
+        <center><h1><b>Your Profile</b></h1></center>
+        <div class="container" style="width:400px">
 
-    if (password != confirmPassword) {
-        $("#divCheckPassword").removeClass("alert-success alert-warning");
-        $("#divCheckPassword").addClass("alert alert-warning");
-        $("#divCheckPassword").html("Passwords do not match!");
+            <?php if ($this->session->flashdata('Failed')): ?>
+				<p class='flash_msg flash_fail'>  </p>
+				<div class="alert alert-danger alert-dismissible fade show" role="alert" style="width:100%;font-size:14px">
+					<strong>Update Failed!</strong> <?php echo $this->session->flashdata('Failed') ?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<?php endif?>
 
-    }
-    else {
-        $("#divCheckPassword").removeClass("alert-success alert-warning");
-        $("#divCheckPassword").addClass("alert alert-success");
-        $("#divCheckPassword").html("Passwords match.");
-    }
-}
+            <?php if ($this->session->flashdata('Success')): ?>
+				<p class='flash_msg flash_fail'>  </p>
+				<div class="alert alert-success alert-dismissible fade show" role="success" style="width:100%;font-size:14px">
+					<strong>Update Success!</strong> <?php echo $this->session->flashdata('Success') ?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<?php endif?>
 
-$(document).ready(function () {
-    $("#txtConfirmPassword, #txtNewPassword").keyup(isPasswordMatch);
-});
-
-
-
-</script>
+            <form action="update/" method = "POST">
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" name="NPassword" placeholder="New Password" id="txtNewPassword" class="form-control" style="font-size:14px">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="RNPassword" placeholder="Retype New Password" id="txtConfirmPassword" onChange="isPasswordMatch();" class="form-control" style="font-size:14px">
+                </div>
+                <center><button id="confirm" type="submit" class="btn btn-primary" style="font-size:14px" data-toggle="modal" data-target="#myModal">Submit</button></center>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
